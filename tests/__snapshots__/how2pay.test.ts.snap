@@ -1,0 +1,135 @@
+// Vitest Snapshot v1
+
+exports[`couponCalculator 1`] = `
+{
+  "couponTotal": 744.79,
+  "deposit": 290,
+  "discount": 1355.79,
+  "original": 4232,
+  "payables": 2586.21,
+  "shopSale": 611,
+  "turnMatch": [
+    {
+      "coupon": "满300减50",
+      "save": 500,
+    },
+    {
+      "coupon": "购物券1200-110",
+      "save": 110,
+    },
+    {
+      "coupon": "88vip打折",
+      "save": 84.79,
+    },
+    {
+      "coupon": "88vip优惠套餐",
+      "save": 50,
+    },
+  ],
+}
+`;
+
+exports[`how2pay 1`] = `
+{
+  "groupsSave": [
+    [
+      {
+        "coupons": [
+          "满300减50",
+          "88vip打折",
+          "88vip优惠套餐",
+        ],
+        "deposit": 100,
+        "name": "bose",
+        "price": 1999,
+        "shopSale": 0,
+      },
+      {
+        "coupons": [
+          "88vip优惠套餐",
+        ],
+        "deposit": 50,
+        "name": "mac粉底液",
+        "price": 340,
+        "shopSale": 0,
+      },
+      {
+        "coupons": [
+          "满300减50",
+          "88vip优惠套餐",
+        ],
+        "deposit": 40,
+        "name": "自然堂面膜",
+        "price": 398,
+        "shopSale": 150,
+      },
+    ],
+    [
+      {
+        "coupons": [
+          "满300减50",
+          "购物券1200-110",
+          "88vip优惠套餐",
+        ],
+        "deposit": 50,
+        "name": "伊夫泉",
+        "price": 900,
+        "shopSale": 451,
+      },
+      {
+        "coupons": [
+          "购物券1200-110",
+          "88vip优惠套餐",
+        ],
+        "deposit": 50,
+        "name": "修丽可",
+        "price": 595,
+        "shopSale": 10,
+      },
+    ],
+  ],
+  "minPaid": 2585.64,
+  "resultSave": [
+    {
+      "couponTotal": 485.36,
+      "deposit": 190,
+      "discount": 635.36,
+      "original": 2737,
+      "payables": 1911.64,
+      "shopSale": 150,
+      "turnMatch": [
+        {
+          "coupon": "满300减50",
+          "save": 350,
+        },
+        {
+          "coupon": "88vip打折",
+          "save": 85.36,
+        },
+        {
+          "coupon": "88vip优惠套餐",
+          "save": 50,
+        },
+      ],
+    },
+    {
+      "couponTotal": 260,
+      "deposit": 100,
+      "discount": 721,
+      "original": 1495,
+      "payables": 674,
+      "shopSale": 461,
+      "turnMatch": [
+        {
+          "coupon": "满300减50",
+          "save": 150,
+        },
+        {
+          "coupon": "购物券1200-110",
+          "save": 110,
+        },
+      ],
+    },
+  ],
+}
+`;
