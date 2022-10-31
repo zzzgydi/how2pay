@@ -35,7 +35,7 @@ export const EditGoods = forwardRef<EditGoodsRef, Props>((props, ref) => {
     reject: () => void;
   }>();
 
-  const { control, ...formIns } = useForm<IGoods>({
+  const { control, register, ...formIns } = useForm<IGoods>({
     defaultValues: {
       name: "这是商品名称",
       deposit: 0,
@@ -93,48 +93,39 @@ export const EditGoods = forwardRef<EditGoodsRef, Props>((props, ref) => {
   } as const;
 
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth>
+    <Dialog open={open} fullWidth>
       <DialogTitle sx={{ pb: 1 }}>
         {type === "new" ? "添加商品" : "编辑商品"}
       </DialogTitle>
 
       <DialogContent sx={{ pb: 1, maxHeight: 520 }}>
-        <Controller
-          name="name"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextField {...textProps} {...field} label="商品名称" />
-          )}
+        <TextField
+          {...textProps}
+          {...register("name", { required: true })}
+          required
+          label="商品名称"
         />
 
-        <Controller
-          name="deposit"
-          control={control}
-          render={({ field }) => (
-            <TextField {...textProps} {...field} label="定金" type="number" />
-          )}
+        <TextField
+          {...textProps}
+          {...register("deposit", { valueAsNumber: true })}
+          label="定金"
+          type="number"
         />
 
-        <Controller
-          name="shopSale"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...textProps}
-              {...field}
-              label="店铺优惠"
-              type="number"
-            />
-          )}
+        <TextField
+          {...textProps}
+          {...register("shopSale", { valueAsNumber: true })}
+          label="店铺优惠"
+          type="number"
         />
 
-        <Controller
-          name="price"
-          control={control}
-          render={({ field }) => (
-            <TextField {...textProps} {...field} label="总价" type="number" />
-          )}
+        <TextField
+          {...textProps}
+          {...register("price", { required: true, valueAsNumber: true })}
+          required
+          label="总价"
+          type="number"
         />
 
         <Controller
@@ -164,8 +155,12 @@ export const EditGoods = forwardRef<EditGoodsRef, Props>((props, ref) => {
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={handleClose}>取消</Button>
-        <Button onClick={handleSubmit}>确认</Button>
+        <Button variant="outlined" onClick={handleClose}>
+          取消
+        </Button>
+        <Button variant="contained" onClick={handleSubmit}>
+          确认
+        </Button>
       </DialogActions>
     </Dialog>
   );

@@ -8,17 +8,17 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import { ControllerRenderProps } from "react-hook-form";
+import { ControllerRenderProps, UseFormRegisterReturn } from "react-hook-form";
 
-type AnyField = ControllerRenderProps<any, any>;
+type AnyField = ControllerRenderProps<any, any> | UseFormRegisterReturn;
 
 export function renderName(textProps: any, field: AnyField) {
-  return <TextField {...field} {...textProps} label="优惠券名称" />;
+  return <TextField {...field} {...textProps} required label="优惠券名称" />;
 }
 
 export function renderType(controlProps: FormControlProps, field: AnyField) {
   return (
-    <FormControl {...controlProps}>
+    <FormControl {...controlProps} required>
       <InputLabel>优惠券类型</InputLabel>
       <Select {...field}>
         <MenuItem value="target">满减</MenuItem>
@@ -31,13 +31,25 @@ export function renderType(controlProps: FormControlProps, field: AnyField) {
 
 export function renderTarget(textProps: any, field: AnyField) {
   return (
-    <TextField {...field} {...textProps} type="number" label="满减目标金额" />
+    <TextField
+      {...field}
+      {...textProps}
+      required
+      type="number"
+      label="满减目标金额"
+    />
   );
 }
 
 export function renderReduce(textProps: any, field: AnyField) {
   return (
-    <TextField {...field} {...textProps} type="number" label="满减优惠金额" />
+    <TextField
+      {...field}
+      {...textProps}
+      required
+      type="number"
+      label="满减优惠金额"
+    />
   );
 }
 
@@ -46,6 +58,7 @@ export function renderSale(textProps: any, field: AnyField) {
     <TextField
       {...field}
       {...textProps}
+      required
       type="number"
       label="打折折扣"
       helperText="例如，95折就填0.95"
@@ -66,7 +79,7 @@ export function renderSaleTarget(textProps: any, field: AnyField) {
 
 export function renderOrder(controlProps: FormControlProps, field: AnyField) {
   return (
-    <FormControl {...controlProps}>
+    <FormControl {...controlProps} required>
       <InputLabel>扣费顺序</InputLabel>
       <Select {...field}>
         <MenuItem value={1}>按总价计算</MenuItem>
@@ -81,6 +94,7 @@ export function renderTimes(textProps: any, field: AnyField, withHelp = true) {
     <TextField
       {...field}
       {...textProps}
+      required
       label="可用次数"
       type="number"
       helperText={

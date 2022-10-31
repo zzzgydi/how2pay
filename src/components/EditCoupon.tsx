@@ -26,7 +26,7 @@ export const EditCoupon = forwardRef<EditCouponRef>((props, ref) => {
     reject: () => void;
   }>();
 
-  const { control, watch, ...formIns } = useForm<ICoupon>({
+  const { control, register, watch, ...formIns } = useForm<ICoupon>({
     defaultValues: {
       name: "这是优惠券名称",
       type: "target",
@@ -35,6 +35,7 @@ export const EditCoupon = forwardRef<EditCouponRef>((props, ref) => {
       reduce: 0,
       times: 1,
       sale: 0.95,
+      repeat: false,
       group: [],
     },
   });
@@ -118,11 +119,13 @@ export const EditCoupon = forwardRef<EditCouponRef>((props, ref) => {
         <Controller
           name="type"
           control={control}
+          rules={{ required: true }}
           render={({ field }) => R.renderType(textProps, field)}
         />
         <Controller
           name="order"
           control={control}
+          rules={{ required: true }}
           render={({ field }) => R.renderOrder(textProps, field)}
         />
 
@@ -131,12 +134,28 @@ export const EditCoupon = forwardRef<EditCouponRef>((props, ref) => {
             <Controller
               name="target"
               control={control}
-              render={({ field }) => R.renderTarget(textProps, field)}
+              render={({ field }) =>
+                R.renderTarget(textProps, {
+                  ...field,
+                  ...register("target", {
+                    required: true,
+                    valueAsNumber: true,
+                  }),
+                })
+              }
             />
             <Controller
               name="reduce"
               control={control}
-              render={({ field }) => R.renderReduce(textProps, field)}
+              render={({ field }) =>
+                R.renderReduce(textProps, {
+                  ...field,
+                  ...register("reduce", {
+                    required: true,
+                    valueAsNumber: true,
+                  }),
+                })
+              }
             />
           </>
         )}
@@ -146,12 +165,22 @@ export const EditCoupon = forwardRef<EditCouponRef>((props, ref) => {
             <Controller
               name="sale"
               control={control}
-              render={({ field }) => R.renderSale(textProps, field)}
+              render={({ field }) =>
+                R.renderSale(textProps, {
+                  ...field,
+                  ...register("sale", { required: true, valueAsNumber: true }),
+                })
+              }
             />
             <Controller
               name="target"
               control={control}
-              render={({ field }) => R.renderSaleTarget(textProps, field)}
+              render={({ field }) =>
+                R.renderSaleTarget(textProps, {
+                  ...field,
+                  ...register("target", { valueAsNumber: true }),
+                })
+              }
             />
           </>
         )}
@@ -162,7 +191,12 @@ export const EditCoupon = forwardRef<EditCouponRef>((props, ref) => {
             <Controller
               name="times"
               control={control}
-              render={({ field }) => R.renderTimes(textProps, field)}
+              render={({ field }) =>
+                R.renderTimes(textProps, {
+                  ...field,
+                  ...register("times", { required: true, valueAsNumber: true }),
+                })
+              }
             />
             <Controller
               name="repeat"
@@ -195,12 +229,14 @@ export const EditCoupon = forwardRef<EditCouponRef>((props, ref) => {
                     <Controller
                       name={`group.${index}.name`}
                       control={control}
+                      rules={{ required: true }}
                       render={({ field }) => R.renderName(innerProps, field)}
                     />
 
                     <Controller
                       name={`group.${index}.type`}
                       control={control}
+                      rules={{ required: true }}
                       render={({ field }) =>
                         R.renderType({ ...innerProps, disabled: true }, field)
                       }
@@ -209,7 +245,17 @@ export const EditCoupon = forwardRef<EditCouponRef>((props, ref) => {
                       name={`group.${index}.times`}
                       control={control}
                       render={({ field }) =>
-                        R.renderTimes(innerProps, field, false)
+                        R.renderTimes(
+                          innerProps,
+                          {
+                            ...field,
+                            ...register(`group.${index}.times`, {
+                              required: true,
+                              valueAsNumber: true,
+                            }),
+                          },
+                          false
+                        )
                       }
                     />
                     {/* <Controller
@@ -220,12 +266,28 @@ export const EditCoupon = forwardRef<EditCouponRef>((props, ref) => {
                     <Controller
                       name={`group.${index}.target`}
                       control={control}
-                      render={({ field }) => R.renderTarget(innerProps, field)}
+                      render={({ field }) =>
+                        R.renderTarget(innerProps, {
+                          ...field,
+                          ...register(`group.${index}.target`, {
+                            required: true,
+                            valueAsNumber: true,
+                          }),
+                        })
+                      }
                     />
                     <Controller
                       name={`group.${index}.reduce`}
                       control={control}
-                      render={({ field }) => R.renderReduce(innerProps, field)}
+                      render={({ field }) =>
+                        R.renderReduce(innerProps, {
+                          ...field,
+                          ...register(`group.${index}.reduce`, {
+                            required: true,
+                            valueAsNumber: true,
+                          }),
+                        })
+                      }
                     />
                     <Controller
                       name={`group.${index}.repeat`}
