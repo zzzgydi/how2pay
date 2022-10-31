@@ -17,8 +17,8 @@ export function couponCalculator(goods: IGoods[], couponMap: ICouponMap) {
     return [...new Set(names)]
       .map((name) => couponMap[name])
       .filter((c) => (c.order ?? 0) <= 1) // 基于原价的优惠
-      .filter((c) => c.times > 0) // 次数得够
-      .sort((a, b) => a.order - b.order);
+      .filter((c) => c.times && c.times > 0) // 次数得够
+      .sort((a, b) => (a.order || 3) - (b.order || 3));
   };
 
   const findCouponsNotOriginal = () => {
@@ -26,8 +26,8 @@ export function couponCalculator(goods: IGoods[], couponMap: ICouponMap) {
     return [...new Set(names)]
       .map((name) => couponMap[name])
       .filter((c) => (c.order ?? 0) > 1) // 基于到手价的优惠
-      .filter((c) => c.times > 0) // 次数得够
-      .sort((a, b) => a.order - b.order);
+      .filter((c) => c.times && c.times > 0) // 次数得够
+      .sort((a, b) => (a.order || 3) - (b.order || 3));
   };
 
   // 记录每轮的匹配情况
@@ -127,6 +127,7 @@ function calCoupon(coupon: ICoupon, price: RMB): RMB {
     type === "target" &&
     !noTarget &&
     D.greaterThanOrEqual(price, target) &&
+    coupon.times &&
     coupon.times > 0
   ) {
     // 一个优惠券允许多次使用

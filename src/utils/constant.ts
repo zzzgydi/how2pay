@@ -2,7 +2,7 @@ export const tbCoupons: ICoupon[] = [
   {
     name: "满300减50",
     type: "target",
-    order: 0,
+    order: 1,
     times: 99999,
     repeat: true,
     target: 300,
@@ -29,7 +29,7 @@ export const tbCoupons: ICoupon[] = [
   {
     name: "88vip优惠套餐",
     type: "group",
-    order: 4,
+    order: 3,
     times: 99,
     repeat: false,
     group: [
@@ -37,7 +37,6 @@ export const tbCoupons: ICoupon[] = [
         name: "6800-500",
         type: "target",
         times: 1,
-        order: 0,
         repeat: false,
         target: 6800,
         reduce: 500,
@@ -46,7 +45,6 @@ export const tbCoupons: ICoupon[] = [
         name: "3800-300",
         type: "target",
         times: 1,
-        order: 0,
         repeat: false,
         target: 3800,
         reduce: 300,
@@ -55,7 +53,6 @@ export const tbCoupons: ICoupon[] = [
         name: "1000-50",
         type: "target",
         times: 1,
-        order: 0,
         repeat: false,
         target: 1000,
         reduce: 50,
