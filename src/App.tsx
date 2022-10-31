@@ -10,6 +10,7 @@ import { EditGoods, EditGoodsRef } from "./components/EditGoods";
 import { EditCoupon, EditCouponRef } from "./components/EditCoupon";
 import { how2pay } from "./utils/how2pay";
 import { version } from "../package.json";
+import { ShoppingCartRounded } from "@mui/icons-material";
 
 const TEMP_SAVE_GOODS = "temp_save_goods";
 const TEMP_SAVE_COUPONS = "temp_save_coupons";
@@ -146,14 +147,33 @@ function App() {
 
       {runResult && (
         <div className="my-5">
-          <Typography variant="h5">
-            总价: ${toUnit(runResult.minPaid)}
-          </Typography>
+          <div className="text-2xl text-right mr-4">
+            总价:
+            <span className="ml-2 text-rose-600">
+              ¥{toUnit(runResult.minPaid)}
+            </span>
+          </div>
 
           {runResult.groupsSave.map((groups, index) => (
-            <div key={index + ""}>
+            <div key={index + ""} className="my-2 py-2 px-4 border rounded-lg">
+              <div className="mb-2 flex items-center justify-between">
+                <span>分组 {index + 1}</span>
+                <span className="text-lg text-rose-600">
+                  ¥{toUnit(runResult.resultSave[index].payables)}
+                </span>
+              </div>
+
               {groups.map((item) => (
-                <div key={item.name}>{item.name}</div>
+                <div
+                  key={item.name}
+                  className="my-1 flex items-center truncate"
+                >
+                  <ShoppingCartRounded
+                    fontSize="small"
+                    className="text-slate-400 mr-2"
+                  />
+                  {item.name}
+                </div>
               ))}
             </div>
           ))}
