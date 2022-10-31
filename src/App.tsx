@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { toUnit } from "dinero.js";
 import { cloneDeep } from "lodash-es";
 import { useUpdateEffect } from "ahooks";
-import { Button, Typography } from "@mui/material";
+import { Button, Divider, Typography } from "@mui/material";
 import { ShoppingCartRounded } from "@mui/icons-material";
 import { tbCoupons } from "./utils/constant";
 import { Goods } from "./components/Goods";
@@ -182,7 +182,7 @@ function App() {
           </div>
 
           {runResult.groupsSave.map((groups, index) => (
-            <div key={index + ""} className="my-2 py-2 px-4 border rounded-lg">
+            <div key={index + ""} className="my-3 py-2 px-4 border rounded-lg">
               <div className="mb-2 flex items-center flex-wrap gap-3">
                 <span>分组 {index + 1}</span>
                 <span className="text-sm text-slate-600">
@@ -215,6 +215,19 @@ function App() {
                     className="flex-none text-slate-400 mr-2"
                   />
                   <span>{item.name}</span>
+                </div>
+              ))}
+
+              {runResult.resultSave[index].turnMatch.length > 0 && (
+                <Divider textAlign="left">
+                  <span className="text-sm text-slate-400">优惠券使用情况</span>
+                </Divider>
+              )}
+
+              {runResult.resultSave[index].turnMatch.map((turn, index) => (
+                <div className="pl-7 my-1 flex items-center">
+                  <span className="mr-4">{turn.coupon}</span>
+                  <span className="text-rose-600">¥{toUnit(turn.save)}</span>
                 </div>
               ))}
             </div>
