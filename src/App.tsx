@@ -156,9 +156,24 @@ function App() {
 
           {runResult.groupsSave.map((groups, index) => (
             <div key={index + ""} className="my-2 py-2 px-4 border rounded-lg">
-              <div className="mb-2 flex items-center justify-between">
+              <div className="mb-2 flex items-center">
                 <span>分组 {index + 1}</span>
-                <span className="text-lg text-rose-600">
+                <span className="text-sm ml-5 text-slate-600">
+                  原价: ¥{toUnit(runResult.resultSave[index].original)}
+                </span>
+                <span className="text-sm ml-5 text-slate-600">
+                  店铺优惠: ¥{toUnit(runResult.resultSave[index].shopSale)}
+                </span>
+                <span className="text-sm ml-5 text-slate-600">
+                  优惠券: ¥{toUnit(runResult.resultSave[index].couponTotal)}
+                </span>
+                <span className="text-sm ml-5 text-slate-600">
+                  优惠汇总: ¥{toUnit(runResult.resultSave[index].discount)}
+                </span>
+                <span className="text-sm ml-5 text-slate-600">
+                  定金: ¥{toUnit(runResult.resultSave[index].deposit)}
+                </span>
+                <span className="ml-auto text-lg text-rose-600">
                   ¥{toUnit(runResult.resultSave[index].payables)}
                 </span>
               </div>
@@ -170,9 +185,9 @@ function App() {
                 >
                   <ShoppingCartRounded
                     fontSize="small"
-                    className="text-slate-400 mr-2"
+                    className="flex-none text-slate-400 mr-2"
                   />
-                  {item.name}
+                  <span>{item.name}</span>
                 </div>
               ))}
             </div>
