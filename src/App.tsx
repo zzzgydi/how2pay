@@ -99,7 +99,7 @@ function App() {
         <Goods goods={goods} onChange={setGoods} onEdit={handleEditGoods} />
       </div>
 
-      <EditGoods ref={editGoodsRef} />
+      <EditGoods ref={editGoodsRef} coupons={coupons} />
       <EditCoupon ref={editCouponRef} />
     </div>
   );

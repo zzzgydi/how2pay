@@ -76,6 +76,7 @@ export const EditCoupon = forwardRef<EditCouponRef>((props, ref) => {
       promiseRef.current = null!;
       setOpen(false);
       setTimeout(() => formIns.reset(), 250);
+      console.log(data);
     })();
   };
 
@@ -102,7 +103,7 @@ export const EditCoupon = forwardRef<EditCouponRef>((props, ref) => {
   } as const;
 
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth>
+    <Dialog open={open} fullWidth>
       <DialogTitle sx={{ pb: 1 }}>
         {type === "new" ? "添加优惠券" : "编辑优惠券"}
       </DialogTitle>
@@ -111,6 +112,7 @@ export const EditCoupon = forwardRef<EditCouponRef>((props, ref) => {
         <Controller
           name="name"
           control={control}
+          rules={{ required: true }}
           render={({ field }) => R.renderName(textProps, field)}
         />
         <Controller
