@@ -47,6 +47,8 @@ export const Goods = (props: Props) => {
     {
       field: "coupons",
       headerName: "优惠券",
+      minWidth: 200,
+      maxWidth: 300,
       disableColumnMenu: true,
     },
     {
