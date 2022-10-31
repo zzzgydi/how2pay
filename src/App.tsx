@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+import { toUnit } from "dinero.js";
+import { cloneDeep } from "lodash-es";
+import { useUpdateEffect } from "ahooks";
 import { Button, Typography } from "@mui/material";
 import { tbCoupons } from "./utils/constant";
 import { Goods } from "./components/Goods";
 import { Coupon } from "./components/Coupon";
 import { EditGoods, EditGoodsRef } from "./components/EditGoods";
 import { EditCoupon, EditCouponRef } from "./components/EditCoupon";
-import { cloneDeep } from "lodash-es";
 import { how2pay } from "./utils/how2pay";
-import { useUpdateEffect } from "ahooks";
-import { toUnit } from "dinero.js";
+import { version } from "../package.json";
 
 const TEMP_SAVE_GOODS = "temp_save_goods";
 const TEMP_SAVE_COUPONS = "temp_save_coupons";
@@ -89,6 +90,7 @@ function App() {
   return (
     <div className="py-5 px-8 mx-auto" style={{ maxWidth: 1200 }}>
       <Typography variant="h3">How To Pay</Typography>
+      <Typography variant="body1">Version: {version}</Typography>
 
       <div className="mt-4 mb-2 text-right flex gap-1 flex-wrap">
         <div className="flex-auto" />
