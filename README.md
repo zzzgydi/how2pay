@@ -8,4 +8,4 @@
 
 ## 使用截图
 
-<img src="https://github.com/zzzgydi/how2pay/raw/main/doc/demo1.png" alt="移动端截图" style="text-align: center;max-height: 300px;">
+<img src="./doc/demo1.png" alt="移动端截图 demo1" width="16%" />
