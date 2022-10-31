@@ -3,13 +3,13 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 interface Props {
   goods: IGoods[];
-  onChange?: (goods: IGoods[]) => void;
   onEdit?: (item: IGoods) => void;
   onDelete?: (item: IGoods) => void;
+  onSelect?: (goods: IGoods[]) => void;
 }
 
 export const Goods = (props: Props) => {
-  const { goods, onChange, onEdit, onDelete } = props;
+  const { goods, onEdit, onDelete, onSelect } = props;
 
   const dataRows = goods.map((item, index) => ({
     index: index + 1,
@@ -82,13 +82,22 @@ export const Goods = (props: Props) => {
 
   return (
     <DataGrid
-      getRowId={(row) => row.name}
+      getRowId={(row) => row.id || row.name}
       hideFooter
       rows={dataRows}
       columns={columns}
+      checkboxSelection
+      onSelectionModelChange={(s) =>
+        onSelect?.(
+          goods.filter(
+            (g: any) =>
+              (g.id && s.includes(g.id)) || (g.name && s.includes(g.name))
+          )
+        )
+      }
       density="compact"
       sx={{
-        height: 300,
+        height: 320,
         "div:focus": { outline: "none !important" },
       }}
     />

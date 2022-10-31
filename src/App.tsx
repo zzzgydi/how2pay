@@ -26,6 +26,8 @@ function App() {
   const editGoodsRef = useRef<EditGoodsRef>(null);
   const editCouponRef = useRef<EditCouponRef>(null);
 
+  const selectedGoods = useRef<IGoods[]>([]);
+
   useEffect(() => {
     try {
       const str = localStorage.getItem(TEMP_SAVE_GOODS);
@@ -79,7 +81,18 @@ function App() {
   };
 
   const handleRun = async () => {
-    const fGoods = cloneDeep(goods);
+    const selected = selectedGoods.current;
+
+    if (goods.length === 0) {
+      window.alert("请添加商品");
+      return;
+    }
+    if (selected.length === 0) {
+      window.alert("请选择商品");
+      return;
+    }
+
+    const fGoods = cloneDeep(selected);
     const fCoupons = cloneDeep(coupons);
 
     const result = how2pay(fGoods, fCoupons);
@@ -89,7 +102,7 @@ function App() {
 
   return (
     <div className="py-5 px-8 mx-auto" style={{ maxWidth: 1200 }}>
-      <Typography variant="h3">How To Pay</Typography>
+      <Typography variant="h4">How To Pay</Typography>
       <Typography variant="body1">Version: {version}</Typography>
 
       <div className="mt-4 mb-2 text-right flex gap-1 flex-wrap">
@@ -109,12 +122,12 @@ function App() {
       </div>
 
       {coupons.length === 0 && (
-        <div className="my-4 py-10 w-full border rounded text-center text-sm">
+        <div className="my-3 py-10 w-full border rounded text-center text-sm">
           请添加优惠券
         </div>
       )}
 
-      <div className="flex gap-2 py-3 my-4 flex-wrap">
+      <div className="flex gap-2 py-3 my-3 flex-wrap">
         {coupons.map((coupon, index) => (
           <Coupon
             key={coupon.name}
@@ -143,10 +156,16 @@ function App() {
       <div>
         <Goods
           goods={goods}
-          onChange={setGoods}
           onEdit={handleEditGoods}
           onDelete={handleDeleteGoods}
+          onSelect={(g) => {
+            selectedGoods.current = g;
+          }}
         />
+      </div>
+
+      <div className="my-3 py-2 px-3 bg-amber-100 text-zinc-700 rounded-lg">
+        注意: 各个优惠券和商品的名称不要重复！
       </div>
 
       {runResult && (
