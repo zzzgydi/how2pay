@@ -1,17 +1,49 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import { tbCoupons } from "./utils/constant";
 import { Goods } from "./components/Goods";
 import { Coupon } from "./components/Coupon";
 import { EditGoods, EditGoodsRef } from "./components/EditGoods";
 import { EditCoupon, EditCouponRef } from "./components/EditCoupon";
+import { cloneDeep } from "lodash-es";
+import { how2pay } from "./utils/how2pay";
+import { useUpdateEffect } from "ahooks";
+import { toUnit } from "dinero.js";
+
+const TEMP_SAVE_GOODS = "temp_save_goods";
+const TEMP_SAVE_COUPONS = "temp_save_coupons";
 
 function App() {
   const [coupons, setCoupons] = useState<ICoupon[]>(tbCoupons);
   const [goods, setGoods] = useState<IGoods[]>([]);
 
+  const [runResult, setRunResult] = useState<ReturnType<typeof how2pay> | null>(
+    null
+  );
+
   const editGoodsRef = useRef<EditGoodsRef>(null);
   const editCouponRef = useRef<EditCouponRef>(null);
+
+  useEffect(() => {
+    try {
+      const str = localStorage.getItem(TEMP_SAVE_GOODS);
+      const data = JSON.parse(str || "");
+      if (str && Array.isArray(data)) {
+        setGoods(data);
+      }
+    } catch {}
+
+    try {
+      const str2 = localStorage.getItem(TEMP_SAVE_COUPONS);
+      const data2 = JSON.parse(str2 || "");
+      if (str2 && Array.isArray(data2)) {
+        setCoupons(data2);
+      }
+    } catch {}
+  }, []);
+
+  useUpdateEffect(() => saveGoods(goods), [goods]);
+  useUpdateEffect(() => saveCoupons(coupons), [coupons]);
 
   const handleCreateGoods = async () => {
     const item = await editGoodsRef.current?.create();
@@ -45,6 +77,15 @@ function App() {
     }
   };
 
+  const handleRun = async () => {
+    const fGoods = cloneDeep(goods);
+    const fCoupons = cloneDeep(coupons);
+
+    const result = how2pay(fGoods, fCoupons);
+    console.log(result);
+    setRunResult(result);
+  };
+
   return (
     <div className="py-5 px-8 mx-auto" style={{ maxWidth: 1200 }}>
       <Typography variant="h3">How To Pay</Typography>
@@ -60,7 +101,9 @@ function App() {
           添加商品
         </Button>
 
-        <Button variant="contained">开始计算</Button>
+        <Button variant="contained" onClick={handleRun}>
+          开始计算
+        </Button>
       </div>
 
       {coupons.length === 0 && (
@@ -99,6 +142,22 @@ function App() {
         <Goods goods={goods} onChange={setGoods} onEdit={handleEditGoods} />
       </div>
 
+      {runResult && (
+        <div className="my-5">
+          <Typography variant="h5">
+            总价: ${toUnit(runResult.minPaid)}
+          </Typography>
+
+          {runResult.groupsSave.map((groups, index) => (
+            <div key={index + ""}>
+              {groups.map((item) => (
+                <div key={item.name}>{item.name}</div>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+
       <EditGoods ref={editGoodsRef} coupons={coupons} />
       <EditCoupon ref={editCouponRef} />
     </div>
@@ -106,3 +165,15 @@ function App() {
 }
 
 export default App;
+
+function saveGoods(goods: IGoods[]) {
+  try {
+    localStorage.setItem(TEMP_SAVE_GOODS, JSON.stringify(goods));
+  } catch {}
+}
+
+function saveCoupons(coupons: ICoupon[]) {
+  try {
+    localStorage.setItem(TEMP_SAVE_COUPONS, JSON.stringify(coupons));
+  } catch {}
+}

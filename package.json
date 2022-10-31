@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.11",
     "@mui/x-data-grid": "^5.17.9",
+    "ahooks": "^3.7.2",
     "currency.js": "^2.0.4",
     "dinero.js": "2.0.0-alpha.8",
     "lodash-es": "^4.17.21",

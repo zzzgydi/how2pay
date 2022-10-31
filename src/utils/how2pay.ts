@@ -25,8 +25,6 @@ export function how2pay(goods: IGoods[], coupons: ICoupon[]) {
       resultSave = results;
       groupsSave = groups;
     }
-
-    console.log(D.toUnit(payables));
   }
 
   return {
