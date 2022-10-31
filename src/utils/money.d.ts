@@ -11,7 +11,6 @@ interface ICoupon {
 }
 
 interface IGoods {
-  id?: string;
   name: string;
   price: number; // 原价/总价
   deposit?: number; // 定金

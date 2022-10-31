@@ -82,7 +82,7 @@ export const Goods = (props: Props) => {
 
   return (
     <DataGrid
-      getRowId={(row) => row.id}
+      getRowId={(row) => row.name}
       hideFooter
       rows={dataRows}
       columns={columns}

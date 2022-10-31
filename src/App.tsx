@@ -59,17 +59,16 @@ function App() {
     if (!newData) return;
 
     setGoods((list) => {
-      const index = list.findIndex((e) => e.id === data.id);
-
+      const index = list.findIndex((e) => e.name === data.name);
       if (index < 0) return list;
       const newList = [...list];
-      newList.splice(index, 1, {
-        ...newData,
-        id: Math.random().toString(),
-      });
-
+      newList.splice(index, 1, newData);
       return newList;
     });
+  };
+
+  const handleDeleteGoods = async (data: IGoods) => {
+    setGoods((list) => list.filter((e) => e.name !== data.name));
   };
 
   const handleCreateCoupon = async () => {
@@ -142,7 +141,12 @@ function App() {
       </div>
 
       <div>
-        <Goods goods={goods} onChange={setGoods} onEdit={handleEditGoods} />
+        <Goods
+          goods={goods}
+          onChange={setGoods}
+          onEdit={handleEditGoods}
+          onDelete={handleDeleteGoods}
+        />
       </div>
 
       {runResult && (
