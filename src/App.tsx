@@ -3,6 +3,7 @@ import { toUnit } from "dinero.js";
 import { cloneDeep } from "lodash-es";
 import { useUpdateEffect } from "ahooks";
 import { Button, Typography } from "@mui/material";
+import { ShoppingCartRounded } from "@mui/icons-material";
 import { tbCoupons } from "./utils/constant";
 import { Goods } from "./components/Goods";
 import { Coupon } from "./components/Coupon";
@@ -10,7 +11,6 @@ import { EditGoods, EditGoodsRef } from "./components/EditGoods";
 import { EditCoupon, EditCouponRef } from "./components/EditCoupon";
 import { how2pay } from "./utils/how2pay";
 import { version } from "../package.json";
-import { ShoppingCartRounded } from "@mui/icons-material";
 
 const TEMP_SAVE_GOODS = "temp_save_goods";
 const TEMP_SAVE_COUPONS = "temp_save_coupons";
@@ -33,7 +33,8 @@ function App() {
       const str = localStorage.getItem(TEMP_SAVE_GOODS);
       const data = JSON.parse(str || "");
       if (str && Array.isArray(data)) {
-        setGoods(data);
+        // 兼容没有id的情况
+        setGoods(data.map((e) => ({ id: Math.random().toString(), ...e })));
       }
     } catch {}
 
@@ -61,7 +62,10 @@ function App() {
     if (!newData) return;
 
     setGoods((list) => {
-      const index = list.findIndex((e) => e.name === data.name);
+      let index = list.findIndex((e) => e.id === data.id);
+      if (index < 0) {
+        index = list.findIndex((e) => e.name === data.name);
+      }
       if (index < 0) return list;
       const newList = [...list];
       newList.splice(index, 1, newData);
