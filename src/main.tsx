@@ -10,12 +10,12 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <App />
       </div>
 
-      <footer className="text-xs text-center py-2 text-slate-400 bg-slate-800">
+      <footer className="text-xs text-center py-2 px-2 text-slate-400 bg-slate-800">
         <div className="mb-1">
-          由于作者水平问题，如最终价格与实际价格有出入，请以购物软件实际价格为准
+          如最终价格与实际价格有出入，请以购物软件实际价格为准
         </div>
         <div>
-          Copyright&copy; 2022{" "}
+          <span className="mr-2">Copyright&copy; 2022</span>
           <a className="underline" href="https://github.com/zzzgydi/how2pay">
             zzzgydi
           </a>
